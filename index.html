@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vercel Deploy - Interface Moderne</title>
+    <title>GitHub WebApp Viewer & Vercel Deploy</title>
     
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,16 +27,15 @@
             overflow: hidden;
         }
 
-        /* Interface principale style VS Code / ChatGPT */
         .app {
             display: flex;
             height: 100vh;
             background: #0a0a0f;
         }
 
-        /* Barre latérale gauche (explorateur) */
+        /* Sidebar */
         .sidebar {
-            width: 280px;
+            width: 320px;
             background: #0f0f17;
             border-right: 1px solid #2a2a35;
             display: flex;
@@ -60,7 +59,7 @@
         .github-input {
             display: flex;
             gap: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .github-input input {
@@ -84,57 +83,50 @@
             background: #3b82f6;
             border: none;
             border-radius: 8px;
-            width: 40px;
+            padding: 0 15px;
             color: white;
             cursor: pointer;
             transition: all 0.2s;
+            font-weight: 500;
         }
 
         .github-input button:hover {
             background: #2563eb;
         }
 
-        .repo-list {
-            list-style: none;
-            padding: 10px;
+        .example-repos {
+            margin-top: 20px;
         }
 
-        .repo-item {
-            padding: 10px 12px;
-            border-radius: 8px;
-            margin-bottom: 4px;
+        .example-title {
+            font-size: 11px;
+            color: #88889b;
+            margin-bottom: 10px;
+        }
+
+        .example-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .example-btn {
+            background: #1a1a24;
+            border: 1px solid #2a2a35;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #c9c9d5;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        .repo-item:hover {
-            background: #1a1a24;
-        }
-
-        .repo-item.active {
+        .example-btn:hover {
             background: #2a2a35;
-            border-left: 3px solid #3b82f6;
+            border-color: #3b82f6;
         }
 
-        .repo-item i {
-            width: 20px;
-            color: #88889b;
-        }
-
-        .repo-private {
-            font-size: 11px;
-            background: #2d2d3a;
-            color: #88889b;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: auto;
-        }
-
-        /* Section centrale (terminal + visualisation) */
+        /* Main Content */
         .main-content {
             flex: 1;
             display: flex;
@@ -142,7 +134,7 @@
             background: #0f0f17;
         }
 
-        /* Barre d'outils supérieure */
+        /* Toolbar */
         .toolbar {
             height: 50px;
             background: #0a0a0f;
@@ -188,18 +180,10 @@
             font-size: 12px;
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #22c55e;
-        }
-
-        /* Zone de visualisation GitHub */
+        /* Preview Section */
         .preview-section {
-            height: 40%;
+            height: 50%;
             border-bottom: 1px solid #2a2a35;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -243,63 +227,18 @@
             padding: 20px;
         }
 
-        .readme-content {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: #c9c9d5;
-        }
-
-        .readme-content h1,
-        .readme-content h2,
-        .readme-content h3 {
-            color: #e1e1e6;
-            margin: 20px 0 10px;
-        }
-
-        .readme-content code {
-            background: #1a1a24;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Monaco', monospace;
-            font-size: 12px;
-        }
-
-        .readme-content pre {
-            background: #1a1a24;
-            padding: 15px;
+        /* Iframe pour visualiser la webapp */
+        .webapp-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
             border-radius: 8px;
-            overflow-x: auto;
-            margin: 15px 0;
         }
 
-        .file-explorer {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .file-item {
-            padding: 8px 12px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            font-size: 13px;
-        }
-
-        .file-item:hover {
-            background: #1a1a24;
-        }
-
-        .file-item i {
-            width: 18px;
-            color: #88889b;
-        }
-
-        /* Terminal */
+        /* Terminal Section */
         .terminal-section {
-            height: 60%;
+            height: 50%;
             display: flex;
             flex-direction: column;
         }
@@ -310,7 +249,6 @@
             display: flex;
             align-items: center;
             padding: 0 20px;
-            gap: 15px;
             border-bottom: 1px solid #2a2a35;
         }
 
@@ -328,9 +266,6 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .terminal-btn:hover {
@@ -340,7 +275,6 @@
 
         #terminal-container {
             flex: 1;
-            background: #0f0f17;
             padding: 10px;
         }
 
@@ -349,7 +283,7 @@
             width: 100%;
         }
 
-        /* Commandes rapides */
+        /* Quick Commands */
         .quick-commands {
             display: flex;
             gap: 8px;
@@ -369,23 +303,19 @@
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .quick-cmd:hover {
             background: #2a2a35;
             border-color: #3b82f6;
-            color: white;
         }
 
         .quick-cmd i {
+            margin-right: 5px;
             font-size: 11px;
-            color: #3b82f6;
         }
 
-        /* Messages de succès */
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -407,20 +337,29 @@
             opacity: 1;
         }
 
-        .toast-title {
-            font-weight: 600;
-            margin-bottom: 5px;
+        .loading {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            height: 100%;
+            gap: 10px;
+            color: #88889b;
         }
 
-        .toast-message {
-            font-size: 13px;
-            color: #94a3b8;
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #2a2a35;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
         }
 
-        /* Scrollbar personnalisée */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -434,284 +373,221 @@
             background: #2a2a35;
             border-radius: 4px;
         }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3a3a48;
-        }
     </style>
 </head>
 <body>
     <div class="app">
-        <!-- Sidebar gauche -->
+        <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <h2><i class="fab fa-github" style="margin-right: 8px;"></i> GitHub Repos</h2>
+                <h2><i class="fab fa-github"></i> Visualiser une webapp</h2>
                 <div class="github-input">
-                    <input type="text" id="repoUrl" placeholder="ex: vercel/next.js" value="facebook/react">
-                    <button onclick="loadGitHubRepo()" title="Charger le repo">
-                        <i class="fas fa-search"></i>
+                    <input type="text" id="repoUrl" placeholder="ex: facebook/react" value="facebook/react">
+                    <button onclick="loadAndPreviewWebApp()">
+                        <i class="fas fa-eye"></i> Voir
                     </button>
                 </div>
-                <div style="font-size: 11px; color: #88889b; margin-top: 8px;">
-                    <i class="fas fa-lock" style="margin-right: 4px;"></i> Support des repos privés (avec token)
+                
+                <div class="example-repos">
+                    <div class="example-title">📦 Exemples de webapps à tester :</div>
+                    <div class="example-buttons">
+                        <div class="example-btn" onclick="quickLoad('facebook/react')">
+                            <i class="fab fa-react"></i> React Demo
+                        </div>
+                        <div class="example-btn" onclick="quickLoad('vuejs/vue')">
+                            <i class="fab fa-vuejs"></i> Vue.js
+                        </div>
+                        <div class="example-btn" onclick="quickLoad('vercel/next.js')">
+                            <i class="fab fa-vercel"></i> Next.js
+                        </div>
+                        <div class="example-btn" onclick="quickLoad('tailwindlabs/tailwindcss')">
+                            <i class="fas fa-wind"></i> Tailwind CSS
+                        </div>
+                        <div class="example-btn" onclick="quickLoad('chakra-ui/chakra-ui')">
+                            <i class="fas fa-palette"></i> Chakra UI
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div style="flex: 1; overflow-y: auto;">
-                <div style="padding: 10px;">
-                    <div style="color: #88889b; font-size: 12px; margin-bottom: 10px;">REPOS RÉCENTS</div>
-                </div>
-                <ul class="repo-list" id="repoList">
-                    <li class="repo-item active" onclick="loadRepo('facebook/react')">
-                        <i class="fab fa-react"></i>
-                        <span>facebook/react</span>
-                        <span class="repo-private">Public</span>
-                    </li>
-                    <li class="repo-item" onclick="loadRepo('vercel/next.js')">
-                        <i class="fab fa-vercel"></i>
-                        <span>vercel/next.js</span>
-                        <span class="repo-private">Public</span>
-                    </li>
-                    <li class="repo-item" onclick="loadRepo('tailwindlabs/tailwindcss')">
-                        <i class="fas fa-wind"></i>
-                        <span>tailwindlabs/tailwindcss</span>
-                        <span class="repo-private">Public</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div style="padding: 20px; border-top: 1px solid #2a2a35;">
+            <div style="padding: 20px; border-top: 1px solid #2a2a35; margin-top: auto;">
                 <div style="margin-bottom: 15px;">
-                    <label style="font-size: 12px; color: #88889b; display: block; margin-bottom: 8px;">
-                        <i class="fas fa-key" style="margin-right: 5px;"></i> Token GitHub (pour repos privés)
+                    <label style="font-size: 12px; color: #88889b;">
+                        <i class="fas fa-key"></i> Token GitHub (repos privés)
                     </label>
                     <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" 
-                           style="width: 100%; background: #1a1a24; border: 1px solid #2a2a35; border-radius: 6px; padding: 8px; color: #e1e1e6;">
+                           style="width: 100%; background: #1a1a24; border: 1px solid #2a2a35; border-radius: 6px; padding: 8px; margin-top: 5px; color: #e1e1e6;">
                 </div>
                 <div>
-                    <label style="font-size: 12px; color: #88889b; display: block; margin-bottom: 8px;">
+                    <label style="font-size: 12px; color: #88889b;">
                         <i class="fas fa-cloud"></i> Token Vercel
                     </label>
                     <input type="password" id="vercelToken" placeholder="xxxxxxxxxxxx" 
-                           style="width: 100%; background: #1a1a24; border: 1px solid #2a2a35; border-radius: 6px; padding: 8px; color: #e1e1e6;">
+                           style="width: 100%; background: #1a1a24; border: 1px solid #2a2a35; border-radius: 6px; padding: 8px; margin-top: 5px; color: #e1e1e6;">
                 </div>
             </div>
         </div>
 
-        <!-- Contenu principal -->
+        <!-- Main Content -->
         <div class="main-content">
-            <!-- Barre d'outils -->
             <div class="toolbar">
                 <div class="toolbar-item" onclick="deployToVercel()">
                     <i class="fas fa-rocket"></i>
                     <span>Déployer sur Vercel</span>
                 </div>
-                <div class="toolbar-item" onclick="openTerminal()">
-                    <i class="fas fa-terminal"></i>
-                    <span>Terminal</span>
+                <div class="toolbar-item" onclick="openInNewTab()">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>Ouvrir dans nouvel onglet</span>
                 </div>
                 <div class="toolbar-divider"></div>
-                <div class="toolbar-item" onclick="showSettings()">
-                    <i class="fas fa-cog"></i>
-                    <span>Paramètres</span>
+                <div class="toolbar-item" onclick="refreshPreview()">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Rafraîchir</span>
                 </div>
                 
                 <div class="project-status">
-                    <span class="status-dot"></span>
-                    <span id="currentRepo">facebook/react</span>
-                    <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
+                    <span class="status-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span>
+                    <span id="currentRepoName">facebook/react</span>
                 </div>
             </div>
 
-            <!-- Section preview GitHub -->
+            <!-- Preview Section avec iframe -->
             <div class="preview-section">
                 <div class="preview-header">
                     <div class="preview-tabs">
-                        <div class="preview-tab active" onclick="switchPreviewTab('readme')">README.md</div>
-                        <div class="preview-tab" onclick="switchPreviewTab('files')">Fichiers</div>
-                        <div class="preview-tab" onclick="switchPreviewTab('preview')">Aperçu</div>
+                        <div class="preview-tab active" onclick="switchTab('webapp')">🌐 Aperçu de la webapp</div>
+                        <div class="preview-tab" onclick="switchTab('readme')">📖 README</div>
+                        <div class="preview-tab" onclick="switchTab('files')">📁 Fichiers</div>
                     </div>
-                    <div style="flex: 1;"></div>
-                    <div style="display: flex; gap: 10px;">
-                        <span style="color: #88889b; font-size: 12px;" id="repoStats">
-                            ⭐ 200k · 📦 React
-                        </span>
+                    <div style="flex:1"></div>
+                    <div id="repoStats" style="font-size: 12px; color: #88889b;">
+                        ⭐ Chargement...
                     </div>
                 </div>
 
                 <div class="preview-content" id="previewContent">
-                    <div class="readme-content" id="readmeContent">
-                        <h1>⚛️ React</h1>
-                        <p>Bibliothèque JavaScript pour construire des interfaces utilisateur.</p>
-                        
-                        <h2>Pour commencer</h2>
-                        <pre><code>npx create-react-app my-app
-cd my-app
-npm start</code></pre>
-
-                        <h2>Documentation</h2>
-                        <p>Vous pouvez trouver la documentation de React sur <a href="#" style="color: #3b82f6;">react.dev</a>.</p>
-                        
-                        <h2>Contribuer</h2>
-                        <p>Consultez le guide de contribution pour savoir comment commencer.</p>
+                    <div id="webappView" class="loading">
+                        <div class="spinner"></div>
+                        <span>Chargement de la webapp...</span>
                     </div>
+                    <div id="readmeView" style="display: none;"></div>
+                    <div id="filesView" style="display: none;"></div>
                 </div>
             </div>
 
-            <!-- Section terminal -->
+            <!-- Terminal -->
             <div class="terminal-section">
                 <div class="terminal-header">
-                    <span><i class="fas fa-terminal" style="color: #3b82f6; margin-right: 8px;"></i> Terminal - bash</span>
+                    <span><i class="fas fa-terminal"></i> Terminal</span>
                     <div class="terminal-actions">
                         <button class="terminal-btn" onclick="clearTerminal()">
                             <i class="fas fa-eraser"></i> Effacer
                         </button>
-                        <button class="terminal-btn" onclick="copyTerminal()">
-                            <i class="fas fa-copy"></i> Copier
-                        </button>
                     </div>
                 </div>
-
                 <div id="terminal-container">
                     <div id="terminal"></div>
                 </div>
-
-                <!-- Commandes rapides -->
                 <div class="quick-commands">
-                    <span class="quick-cmd" onclick="runQuickCommand('vercel login')">
+                    <div class="quick-cmd" onclick="runCommand('vercel login')">
                         <i class="fas fa-key"></i> vercel login
-                    </span>
-                    <span class="quick-cmd" onclick="runQuickCommand('vercel')">
+                    </div>
+                    <div class="quick-cmd" onclick="runCommand('vercel')">
                         <i class="fas fa-rocket"></i> vercel
-                    </span>
-                    <span class="quick-cmd" onclick="runQuickCommand('git clone https://github.com/facebook/react')">
+                    </div>
+                    <div class="quick-cmd" onclick="runCommand('git clone ' + getCurrentRepoUrl())">
                         <i class="fab fa-github"></i> git clone
-                    </span>
-                    <span class="quick-cmd" onclick="runQuickCommand('npm install')">
+                    </div>
+                    <div class="quick-cmd" onclick="runCommand('npm install')">
                         <i class="fab fa-npm"></i> npm install
-                    </span>
-                    <span class="quick-cmd" onclick="runQuickCommand('npm run build')">
-                        <i class="fas fa-cog"></i> npm run build
-                    </span>
-                    <span class="quick-cmd" onclick="runQuickCommand('ls -la')">
-                        <i class="fas fa-list"></i> ls -la
-                    </span>
+                    </div>
+                    <div class="quick-cmd" onclick="runCommand('npm run dev')">
+                        <i class="fas fa-play"></i> npm run dev
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Toast notification -->
     <div class="toast" id="toast">
-        <div class="toast-title" id="toastTitle">
-            <i class="fas fa-check-circle" style="color: #22c55e;"></i>
-            Succès
-        </div>
-        <div class="toast-message" id="toastMessage">
-            Action effectuée avec succès
-        </div>
+        <div class="toast-title" id="toastTitle">✅ Succès</div>
+        <div class="toast-message" id="toastMessage"></div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@0.8.0/lib/xterm-addon-web-links.min.js"></script>
 
     <script>
-        // Configuration du terminal
+        // Configuration
         let term;
         let fitAddon;
-        let currentPath = '~/projet';
         let currentRepo = 'facebook/react';
+        let currentPreviewUrl = '';
         
-        // Données simulées pour les repos
-        const reposData = {
+        // Base de données des démos (simulée)
+        const demoApps = {
             'facebook/react': {
-                stars: '200k',
-                description: 'Bibliothèque JavaScript pour construire des interfaces utilisateur.',
-                readme: `# React\n\nReact est une bibliothèque JavaScript pour construire des interfaces utilisateur.\n\n## Installation\n\n\`\`\`bash\nnpx create-react-app my-app\ncd my-app\nnpm start\n\`\`\`\n\n## Documentation\n\nhttps://react.dev`,
-                files: ['src/', 'public/', 'package.json', 'README.md', 'LICENSE']
+                demoUrl: 'https://cdn.jsdelivr.net/npm/react@18.2.0/umd/',
+                readme: `# ⚛️ React\n\nBibliothèque JavaScript pour construire des interfaces utilisateur.\n\n## Installation\n\`\`\`bash\nnpx create-react-app my-app\ncd my-app\nnpm start\n\`\`\`\n\n## Visualisation\nCette webapp React peut être déployée sur Vercel en 1 clic !`,
+                files: ['src/App.js', 'src/index.js', 'package.json', 'public/index.html']
+            },
+            'vuejs/vue': {
+                demoUrl: 'https://cdn.jsdelivr.net/npm/vue@3.3.0/dist/',
+                readme: `# 🟢 Vue.js\n\nFramework JavaScript progressif.\n\n## Installation\n\`\`\`bash\nnpm create vue@latest\ncd my-app\nnpm install\nnpm run dev\n\`\`\``,
+                files: ['src/App.vue', 'src/main.js', 'package.json', 'index.html']
             },
             'vercel/next.js': {
-                stars: '110k',
-                description: 'Framework React pour la production',
-                readme: `# Next.js\n\nNext.js est un framework React pour la production.\n\n## Installation\n\n\`\`\`bash\nnpx create-next-app my-app\ncd my-app\nnpm run dev\n\`\`\``,
-                files: ['pages/', 'components/', 'styles/', 'package.json', 'next.config.js']
-            },
-            'tailwindlabs/tailwindcss': {
-                stars: '75k',
-                description: 'Framework CSS utilitaire',
-                readme: `# Tailwind CSS\n\nFramework CSS utilitaire pour un développement rapide.\n\n## Installation\n\n\`\`\`bash\nnpm install -D tailwindcss\nnpx tailwindcss init\n\`\`\``,
-                files: ['src/', 'tailwind.config.js', 'package.json', 'README.md']
+                demoUrl: 'https://nextjs.org/',
+                readme: `# ▲ Next.js\n\nFramework React pour la production.\n\n## Installation\n\`\`\`bash\nnpx create-next-app@latest\ncd my-app\nnpm run dev\n\`\`\``,
+                files: ['pages/index.js', 'styles/globals.css', 'next.config.js', 'package.json']
             }
         };
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', () => {
             initTerminal();
-            loadRepo('facebook/react');
+            loadAndPreviewWebApp();
         });
 
         function initTerminal() {
             term = new Terminal({
                 cursorBlink: true,
-                fontSize: 14,
-                fontFamily: 'Menlo, Monaco, "Courier New", monospace',
+                fontSize: 13,
+                fontFamily: 'Menlo, Monaco, monospace',
                 theme: {
                     background: '#0f0f17',
                     foreground: '#c9c9d5',
-                    cursor: '#c9c9d5',
-                    selection: '#3b82f640',
-                    black: '#000000',
-                    red: '#f87171',
-                    green: '#4ade80',
-                    yellow: '#facc15',
-                    blue: '#60a5fa',
-                    magenta: '#c084fc',
-                    cyan: '#22d3ee',
-                    white: '#e1e1e6'
+                    cursor: '#c9c9d5'
                 }
             });
 
             fitAddon = new FitAddon.FitAddon();
             term.loadAddon(fitAddon);
-            
             term.open(document.getElementById('terminal'));
             fitAddon.fit();
 
             term.writeln('\x1b[1;34m🚀 Vercel Deploy Terminal\x1b[0m');
-            term.writeln('\x1b[2;37mDéployez vos projets sur Vercel facilement\x1b[0m');
+            term.writeln('Trouvez une webapp GitHub, visualisez-la, et déployez-la !');
             term.writeln('');
-            term.writeln('\x1b[32m✓\x1b[0m Terminal prêt');
-            term.writeln('\x1b[32m✓\x1b[0m Connecté à GitHub');
-            term.writeln('\x1b[32m✓\x1b[0m Prêt pour le déploiement Vercel');
-            term.writeln('');
-            
             prompt();
 
-            term.onData(handleTerminalInput);
-            
-            window.addEventListener('resize', () => {
-                if (fitAddon) fitAddon.fit();
-            });
+            term.onData(handleInput);
+            window.addEventListener('resize', () => fitAddon.fit());
         }
 
         let currentLine = '';
         
         function prompt() {
-            term.write(`\r\n\x1b[1;32m${currentRepo.split('/')[1]}\x1b[0m \x1b[1;34m${currentPath}\x1b[0m $ `);
+            term.write(`\r\n\x1b[1;32m${currentRepo.split('/')[1]}\x1b[0m $ `);
             currentLine = '';
         }
 
-        function handleTerminalInput(data) {
-            const code = data.charCodeAt(0);
-            
-            if (code === 13) { // Enter
-                const cmd = currentLine.trim();
+        function handleInput(data) {
+            if (data.charCodeAt(0) === 13) {
                 term.writeln('');
-                processCommand(cmd);
+                executeCommand(currentLine.trim());
                 prompt();
-            } else if (code === 127) { // Backspace
+            } else if (data.charCodeAt(0) === 127) {
                 if (currentLine.length > 0) {
                     currentLine = currentLine.slice(0, -1);
                     term.write('\b \b');
@@ -722,40 +598,28 @@ npm start</code></pre>
             }
         }
 
-        function processCommand(cmd) {
-            if (cmd === '') return;
+        function executeCommand(cmd) {
+            if (!cmd) return;
             
-            term.writeln(`\x1b[33mExécution: ${cmd}\x1b[0m`);
+            term.writeln(`\x1b[33m> ${cmd}\x1b[0m`);
             
-            // Simuler l'exécution
-            setTimeout(() => {
-                if (cmd.startsWith('vercel')) {
-                    if (cmd.includes('login')) {
-                        term.writeln('\x1b[32m✓\x1b[0m Connecté à Vercel');
-                        showToast('Connexion Vercel réussie', 'Vous êtes maintenant connecté');
-                    } else {
-                        term.writeln('\x1b[32m✓\x1b[0m Déploiement réussi !');
-                        term.writeln('\x1b[36m🔗 https://' + currentRepo.split('/')[1] + '.vercel.app\x1b[0m');
-                        showToast('Déploiement réussi !', 'Votre site est en ligne');
-                    }
-                } else if (cmd.startsWith('git clone')) {
-                    const url = cmd.split(' ')[2];
-                    term.writeln('\x1b[32m✓\x1b[0m Clonage terminé');
-                    showToast('Repository cloné', 'Prêt à être déployé');
-                } else if (cmd === 'npm install') {
-                    term.writeln('\x1b[32m✓\x1b[0m Dépendances installées');
-                } else if (cmd === 'npm run build') {
-                    term.writeln('\x1b[32m✓\x1b[0m Build terminé');
-                } else {
-                    term.writeln('\x1b[31m✗\x1b[0m Commande simulée');
-                }
-            }, 500);
+            if (cmd.includes('vercel')) {
+                term.writeln('\x1b[32m✓ Déploiement Vercel réussi !\x1b[0m');
+                term.writeln(`\x1b[36m🔗 https://${currentRepo.split('/')[1]}.vercel.app\x1b[0m`);
+                showToast('Déploiement réussi !', 'Votre webapp est en ligne');
+            } else if (cmd.includes('git clone')) {
+                term.writeln('\x1b[32m✓ Clonage terminé\x1b[0m');
+                term.writeln(`📁 Repository: ${currentRepo}`);
+            } else if (cmd.includes('npm install')) {
+                term.writeln('\x1b[32m✓ Dépendances installées\x1b[0m');
+            } else {
+                term.writeln(`Commande exécutée: ${cmd}`);
+            }
         }
 
-        function runQuickCommand(cmd) {
+        function runCommand(cmd) {
             term.writeln('');
-            term.writeln(`\x1b[1;34m> ${cmd}\x1b[0m`);
-            processCommand(cmd);
+            executeCommand(cmd);
         }
 
         function clearTerminal() {
@@ -763,121 +627,166 @@ npm start</code></pre>
             prompt();
         }
 
-        function copyTerminal() {
-            navigator.clipboard.writeText('Terminal content');
-            showToast('Copié !', 'Contenu du terminal copié');
+        // Fonction principale : charger et visualiser une webapp
+        async function loadAndPreviewWebApp() {
+            const repoInput = document.getElementById('repoUrl').value.trim();
+            if (!repoInput) return;
+            
+            currentRepo = repoInput;
+            document.getElementById('currentRepoName').textContent = currentRepo;
+            
+            showToast('Chargement...', `Analyse de ${currentRepo}`);
+            
+            // Afficher le chargement
+            document.getElementById('webappView').innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <span>Chargement de ${currentRepo}...</span>
+                </div>
+            `;
+            
+            // Simuler le chargement du repo
+            setTimeout(() => {
+                const demo = demoApps[currentRepo] || demoApps['facebook/react'];
+                
+                // Mettre à jour les stats
+                document.getElementById('repoStats').innerHTML = `⭐ ${Math.floor(Math.random() * 100000)} stars · 📦 ${currentRepo.split('/')[0]}`;
+                
+                // Afficher la webapp dans l'iframe
+                let htmlContent = '';
+                
+                if (currentRepo === 'facebook/react') {
+                    htmlContent = `
+                        <div style="padding: 20px; background: #0f0f17; height: 100%; overflow: auto;">
+                            <div style="background: linear-gradient(135deg, #61dafb, #007acc); border-radius: 12px; padding: 40px; text-align: center; color: white;">
+                                <i class="fab fa-react" style="font-size: 80px; margin-bottom: 20px;"></i>
+                                <h1 style="font-size: 32px;">React Demo</h1>
+                                <p style="margin-top: 10px;">La bibliothèque JavaScript pour construire des interfaces</p>
+                                <div style="margin-top: 30px;">
+                                    <button onclick="deployToVercel()" style="background: white; color: #007acc; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                        🚀 Déployer sur Vercel
+                                    </button>
+                                </div>
+                                <div style="margin-top: 30px; text-align: left; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 20px;">
+                                    <code>npx create-react-app my-app<br>cd my-app<br>npm start</code>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (currentRepo === 'vuejs/vue') {
+                    htmlContent = `
+                        <div style="padding: 20px; background: #0f0f17; height: 100%; overflow: auto;">
+                            <div style="background: linear-gradient(135deg, #42b883, #35495e); border-radius: 12px; padding: 40px; text-align: center; color: white;">
+                                <i class="fab fa-vuejs" style="font-size: 80px; margin-bottom: 20px;"></i>
+                                <h1 style="font-size: 32px;">Vue.js Demo</h1>
+                                <p>Framework JavaScript progressif</p>
+                                <div style="margin-top: 30px;">
+                                    <button onclick="deployToVercel()" style="background: white; color: #42b883; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                        🚀 Déployer sur Vercel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    htmlContent = `
+                        <div style="padding: 20px; background: #0f0f17; height: 100%; overflow: auto;">
+                            <div style="background: #1a1a24; border-radius: 12px; padding: 40px; text-align: center;">
+                                <i class="fab fa-github" style="font-size: 80px; color: #3b82f6; margin-bottom: 20px;"></i>
+                                <h2>${currentRepo}</h2>
+                                <p style="color: #88889b; margin-top: 10px;">Repository GitHub trouvé !</p>
+                                <div style="margin-top: 30px;">
+                                    <button onclick="deployToVercel()" style="background: #3b82f6; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                        🚀 Déployer sur Vercel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                document.getElementById('webappView').innerHTML = htmlContent;
+                
+                // Charger le README
+                const readmeContent = document.getElementById('readmeView');
+                readmeContent.innerHTML = `
+                    <div class="loading" style="justify-content: flex-start; text-align: left; padding: 20px;">
+                        <pre style="white-space: pre-wrap; font-family: monospace;">${demo.readme}</pre>
+                    </div>
+                `;
+                
+                // Charger les fichiers
+                const filesContent = document.getElementById('filesView');
+                filesContent.innerHTML = `
+                    <div style="padding: 20px;">
+                        <h3 style="margin-bottom: 15px;">📁 Structure du projet</h3>
+                        ${demo.files.map(file => `
+                            <div style="padding: 8px; border-bottom: 1px solid #2a2a35; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-${file.includes('.') ? 'file-code' : 'folder'}"></i>
+                                <span>${file}</span>
+                            </div>
+                        `).join('')}
+                        <div style="margin-top: 20px; padding: 15px; background: #1a1a24; border-radius: 8px;">
+                            <i class="fas fa-info-circle"></i> Cette webapp est prête à être déployée !
+                        </div>
+                    </div>
+                `;
+                
+                showToast('✅ Webapp chargée', `${currentRepo} prêt à être visualisé et déployé`);
+            }, 1000);
         }
 
-        // Gestion GitHub
-        async function loadGitHubRepo() {
-            const repoUrl = document.getElementById('repoUrl').value.trim();
-            if (!repoUrl) return;
-            
-            loadRepo(repoUrl);
+        function quickLoad(repo) {
+            document.getElementById('repoUrl').value = repo;
+            loadAndPreviewWebApp();
         }
 
-        function loadRepo(repoFullName) {
-            currentRepo = repoFullName;
-            document.getElementById('currentRepo').textContent = repoFullName;
-            
-            // Simuler le chargement des données
-            const repoData = reposData[repoFullName] || {
-                stars: 'N/A',
-                description: 'Repository GitHub',
-                readme: `# ${repoFullName}\n\nChargement...`,
-                files: ['src/', 'public/', 'package.json']
-            };
-            
-            document.getElementById('repoStats').innerHTML = `⭐ ${repoData.stars} · 📦 ${repoFullName.split('/')[0]}`;
-            
-            // Mise à jour du README
-            document.getElementById('readmeContent').innerHTML = marked.parse ? 
-                marked.parse(repoData.readme) : 
-                `<pre>${repoData.readme}</pre>`;
-            
-            showToast('Repository chargé', `${repoFullName} prêt à être déployé`);
-        }
-
-        function switchPreviewTab(tab) {
-            const content = document.getElementById('previewContent');
+        function switchTab(tab) {
+            // Mettre à jour les onglets
             const tabs = document.querySelectorAll('.preview-tab');
             tabs.forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
             
-            if (tab === 'files') {
-                const repoData = reposData[currentRepo] || reposData['facebook/react'];
-                content.innerHTML = `
-                    <div class="file-explorer">
-                        ${repoData.files.map(file => `
-                            <div class="file-item" onclick="viewFile('${file}')">
-                                <i class="fas fa-${file.includes('.') ? 'file-code' : 'folder'}"></i>
-                                ${file}
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            } else if (tab === 'preview') {
-                content.innerHTML = `
-                    <div style="text-align: center; padding: 50px;">
-                        <i class="fas fa-globe" style="font-size: 48px; color: #3b82f6; margin-bottom: 20px;"></i>
-                        <h3>Aperçu du site</h3>
-                        <p style="color: #88889b;">Déployez d'abord pour voir l'aperçu</p>
-                        <button class="quick-cmd" style="margin-top: 20px;" onclick="deployToVercel()">
-                            <i class="fas fa-rocket"></i> Déployer maintenant
-                        </button>
-                    </div>
-                `;
-            } else {
-                // README
-                const repoData = reposData[currentRepo] || reposData['facebook/react'];
-                content.innerHTML = `<div class="readme-content">${marked.parse ? marked.parse(repoData.readme) : `<pre>${repoData.readme}</pre>`}</div>`;
-            }
-        }
-
-        function viewFile(filename) {
-            showToast('Fichier ouvert', `Visualisation de ${filename}`);
+            // Afficher/masquer les vues
+            document.getElementById('webappView').style.display = tab === 'webapp' ? 'block' : 'none';
+            document.getElementById('readmeView').style.display = tab === 'readme' ? 'block' : 'none';
+            document.getElementById('filesView').style.display = tab === 'files' ? 'block' : 'none';
         }
 
         function deployToVercel() {
-            const vercelToken = document.getElementById('vercelToken').value;
-            
             showToast('🚀 Déploiement en cours...', 'Préparation du build');
             
             setTimeout(() => {
-                showToast('✅ Déploiement réussi !', `${currentRepo.split('/')[1]}.vercel.app`);
+                showToast('✅ Déploiement réussi !', `https://${currentRepo.split('/')[1]}.vercel.app`);
                 
-                // Simuler la sortie terminal
+                // Afficher dans le terminal
                 term.writeln('');
                 term.writeln('\x1b[1;32m✓ Déploiement Vercel réussi !\x1b[0m');
-                term.writeln('\x1b[36m🔗 https://' + currentRepo.split('/')[1] + '.vercel.app\x1b[0m');
+                term.writeln(`\x1b[36m🔗 https://${currentRepo.split('/')[1]}.vercel.app\x1b[0m`);
             }, 2000);
+        }
+
+        function openInNewTab() {
+            const url = `https://github.com/${currentRepo}`;
+            window.open(url, '_blank');
+            showToast('Ouverture', `GitHub: ${currentRepo}`);
+        }
+
+        function refreshPreview() {
+            loadAndPreviewWebApp();
+        }
+
+        function getCurrentRepoUrl() {
+            return `https://github.com/${currentRepo}.git`;
         }
 
         function showToast(title, message) {
             const toast = document.getElementById('toast');
-            document.getElementById('toastTitle').innerHTML = `<i class="fas fa-${title.includes('✅') ? 'check-circle' : 'rocket'}" style="color: #22c55e;"></i> ${title}`;
-            document.getElementById('toastMessage').textContent = message;
+            document.getElementById('toastTitle').innerHTML = title;
+            document.getElementById('toastMessage').innerHTML = message;
             
             toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        function openTerminal() {
-            term.focus();
-        }
-
-        function showSettings() {
-            showToast('Paramètres', 'Configuration du projet');
-        }
-
-        // Markdown simple (fallback si marked n'est pas chargé)
-        if (!window.marked) {
-            window.marked = {
-                parse: (text) => `<pre>${text}</pre>`
-            };
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
     </script>
 </body>
