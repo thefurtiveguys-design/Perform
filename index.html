@@ -3,751 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub WebApp Runner - Exécutez n'importe quelle webapp GitHub</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>PERFORM | Acquisition Organique Haute Performance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0f;
-            color: #e1e1e6;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Layout principal */
-        .app {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        /* Header */
-        .header {
-            background: #0f0f17;
-            border-bottom: 1px solid #2a2a35;
-            padding: 15px 20px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 18px;
-        }
-
-        .logo i {
-            font-size: 24px;
-            color: #667eea;
-        }
-
-        .search-wrapper {
-            flex: 1;
-            display: flex;
-            gap: 10px;
-            max-width: 600px;
-        }
-
-        .search-input {
-            flex: 1;
-            background: #1a1a24;
-            border: 1px solid #2a2a35;
-            border-radius: 8px;
-            padding: 10px 15px;
-            color: #e1e1e6;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .search-input:focus {
-            border-color: #667eea;
-        }
-
-        .btn {
-            background: #667eea;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            color: white;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .btn:hover {
-            background: #5a67d8;
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: #2a2a35;
-        }
-
-        .btn-secondary:hover {
-            background: #3a3a48;
-        }
-
-        /* Split view */
-        .split-view {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        /* Sidebar (explorateur de fichiers) */
-        .sidebar {
-            width: 280px;
-            background: #0f0f17;
-            border-right: 1px solid #2a2a35;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .sidebar-header {
-            padding: 15px;
-            border-bottom: 1px solid #2a2a35;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #88889b;
-        }
-
-        .file-tree {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-        }
-
-        .file-tree-item {
-            padding: 6px 8px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .file-tree-item:hover {
-            background: #1a1a24;
-        }
-
-        .file-tree-item.active {
-            background: #2a2a35;
-            color: #667eea;
-        }
-
-        .folder {
-            font-weight: 500;
-        }
-
-        .folder-children {
-            margin-left: 20px;
-        }
-
-        /* Zone principale */
-        .main-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        /* Tabs */
-        .tabs {
-            background: #0f0f17;
-            border-bottom: 1px solid #2a2a35;
-            display: flex;
-            gap: 2px;
-            padding: 0 10px;
-            overflow-x: auto;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            font-size: 13px;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .tab.active {
-            border-bottom-color: #667eea;
-            color: #667eea;
-        }
-
-        .tab:hover:not(.active) {
-            background: #1a1a24;
-        }
-
-        /* Preview (iframe pour exécuter le code) */
-        .preview-container {
-            flex: 1;
-            background: white;
-            position: relative;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-        }
-
-        /* Éditeur de code */
-        .editor-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .editor-header {
-            background: #1a1a24;
-            padding: 8px 15px;
-            font-size: 12px;
-            border-bottom: 1px solid #2a2a35;
-        }
-
-        .editor-content {
-            flex: 1;
-            overflow: auto;
-        }
-
-        textarea {
-            width: 100%;
-            height: 100%;
-            background: #0f0f17;
-            border: none;
-            color: #e1e1e6;
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 13px;
-            padding: 15px;
-            resize: none;
-            outline: none;
-        }
-
-        /* Split view horizontale */
-        .horizontal-split {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .code-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border-right: 1px solid #2a2a35;
-        }
-
-        .preview-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        /* Loading */
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            gap: 10px;
-            color: #88889b;
-        }
-
-        .spinner {
-            width: 30px;
-            height: 30px;
-            border: 2px solid #2a2a35;
-            border-top-color: #667eea;
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #1e293b;
-            border-left: 4px solid #22c55e;
-            border-radius: 8px;
-            padding: 12px 20px;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 1000;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0f0f17;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #2a2a35;
-            border-radius: 4px;
-        }
+        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; letter-spacing: -0.03em; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .text-blue { color: #3b82f6; }
+        .bg-blue { background-color: #3b82f6; }
+        .glow-blue { box-shadow: 0 0 50px rgba(59, 130, 246, 0.15); }
+        .gradient-text { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .proof-container img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; display: block; }
+        details summary::-webkit-details-marker { display:none; }
+        summary { list-style: none; }
+        .offer-card { border: 1px solid #3b82f6; background: linear-gradient(145deg, rgba(59, 130, 246, 0.1), transparent); }
     </style>
 </head>
-<body>
-    <div class="app">
-        <div class="header">
-            <div class="logo">
-                <i class="fas fa-play-circle"></i>
-                <span>GitHub WebApp Runner</span>
+<body class="antialiased">
+
+    <nav class="p-8 flex justify-between items-center max-w-6xl mx-auto">
+        <div class="text-2xl font-black italic tracking-tighter uppercase">PERFORM<span class="text-blue">.</span></div>
+        <div class="text-[10px] uppercase tracking-[0.4em] text-gray-600 border border-white/10 px-4 py-1 rounded-full text-center">Candidatures Ouvertes — Session 2026</div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6 pt-10 pb-24">
+        <section class="mb-16">
+            <h1 class="text-5xl md:text-7xl font-black mb-8 leading-[0.95] tracking-tighter uppercase">
+                204 MILLIONS DE VUES. <br> 
+                UN SYSTÈME D'ACQUISITION <br> 
+                <span class="text-blue">QUE VOS CONCURRENTS IGNORENT.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-3xl leading-relaxed font-light italic">
+                Nous ne "cherchons" pas la viralité. Nous déployons les protocoles créatifs et techniques nécessaires pour transformer votre attention organique en levier de croissance prévisible.
+            </p>
+        </section>
+
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-24 text-glow">
+            <div class="glass p-8 rounded-2xl text-center glow-blue border-blue/20">
+                <div class="text-4xl font-black text-blue">204M+</div>
+                <div class="text-[9px] uppercase tracking-widest text-gray-600 mt-2">Vues Instagram cumulées</div>
             </div>
-            <div class="search-wrapper">
-                <input type="text" class="search-input" id="repoInput" placeholder="ex: TextMatchCut/TextMatchCut" value="TextMatchCut/TextMatchCut">
-                <button class="btn" onclick="loadAndRunRepo()">
-                    <i class="fas fa-rocket"></i> Lancer
-                </button>
+            <div class="glass p-8 rounded-2xl text-center border-white/5">
+                <div class="text-4xl font-black text-blue">300K</div>
+                <div class="text-[9px] uppercase tracking-widest text-gray-600 mt-2">Vues Shopify (14j TikTok)</div>
             </div>
-            <button class="btn btn-secondary" onclick="refreshPreview()">
-                <i class="fas fa-sync-alt"></i> Rafraîchir
-            </button>
-        </div>
-
-        <div class="split-view">
-            <!-- Sidebar : explorateur de fichiers -->
-            <div class="sidebar">
-                <div class="sidebar-header">
-                    <i class="fas fa-folder-tree"></i> Explorateur
-                </div>
-                <div class="file-tree" id="fileTree">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <span>Chargement...</span>
-                    </div>
-                </div>
+            <div class="glass p-8 rounded-2xl text-center border-white/5 text-blue">
+                <div class="text-4xl font-black">170K+</div>
+                <div class="text-[9px] uppercase tracking-widest text-gray-600 mt-2">Preuve Réelle (Abonnés)</div>
             </div>
+            <div class="glass p-8 rounded-2xl text-center border-white/5">
+                <div class="text-4xl font-black">Full</div>
+                <div class="text-[9px] uppercase tracking-widest text-gray-600 mt-2">Prise en charge Totale</div>
+            </div>
+        </section>
 
-            <!-- Zone principale avec code + preview -->
-            <div class="main-area">
-                <div class="tabs" id="tabs">
-                    <div class="tab active" onclick="switchTab('preview')">
-                        <i class="fas fa-eye"></i> Aperçu
-                    </div>
-                    <div class="tab" onclick="switchTab('code')">
-                        <i class="fas fa-code"></i> Code
-                    </div>
+        <section class="grid md:grid-cols-2 gap-12 mb-32 items-start">
+            <div class="space-y-6 sticky top-24">
+                <h2 class="text-3xl font-black uppercase italic tracking-tighter text-blue">L'exécution avant la théorie.</h2>
+                <div class="text-gray-400 leading-relaxed space-y-4 text-sm md:text-base font-light">
+                    <p>La majorité des agences plafonnent à 300 abonnés et vendent des conseils qu'elles n'appliquent pas. <strong>Perform est née sur le terrain.</strong></p>
+                    <p>Avec une audience personnelle de <strong>170 000 abonnés</strong>, chaque stratégie que nous déployons pour vous a été testée et validée sur nos propres actifs. Nous maîtrisons les structures de <strong>Storytelling</strong> qui captivent et les mécaniques de <strong>Marketing</strong> qui convertissent l'audience en clients.</p>
+                    <p class="glass p-6 rounded-xl border-l-4 border-blue">
+                        <strong>300k vues en 14 jours</strong> pour un e-commerce, <strong>10k abonnés YT en 28 jours</strong>... Nous ne vendons pas du vent, nous vendons un raccourci vers des parts de marché massives.
+                    </p>
                 </div>
-
-                <div class="horizontal-split">
-                    <!-- Panneau code (caché par défaut) -->
-                    <div class="code-panel" id="codePanel" style="display: none;">
-                        <div class="editor-header">
-                            <i class="fas fa-file-code"></i> <span id="currentFileLabel">index.html</span>
-                        </div>
-                        <div class="editor-content">
-                            <textarea id="codeEditor" placeholder="Sélectionnez un fichier pour éditer..."></textarea>
-                        </div>
-                        <div style="padding: 10px; background: #0f0f17; border-top: 1px solid #2a2a35;">
-                            <button class="btn" style="padding: 6px 12px; font-size: 12px;" onclick="applyCodeChanges()">
-                                <i class="fas fa-play"></i> Appliquer et exécuter
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Panneau preview -->
-                    <div class="preview-panel">
-                        <div class="preview-container" id="previewContainer">
-                            <div class="loading">
-                                <div class="spinner"></div>
-                                <span>Chargement de la webapp...</span>
-                            </div>
-                        </div>
-                    </div>
+                
+                <div class="glass p-8 rounded-[30px] border border-blue/20">
+                    <h3 class="text-lg font-black mb-4 uppercase text-blue italic tracking-widest">Nos Piliers de Croissance</h3>
+                    <ul class="space-y-3 text-xs font-bold uppercase tracking-widest text-gray-300">
+                        <li>✔ Ingénierie de Rétention (Watch Time)</li>
+                        <li>✔ Systèmes d'Acquisition TikTok & Shorts</li>
+                        <li>✔ Stratégies de Conversion E-commerce</li>
+                        <li>✔ Optimisation du Reach Instagram</li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i> <span id="toastMessage">Prêt !</span>
-    </div>
+            <div class="proof-container">
+                <span class="text-[10px] uppercase tracking-[0.5em] text-blue font-bold mb-6 block text-center">Validation des données analytics</span>
+                <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png">
+                <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png">
+                <img src="https://i.postimg.cc/tJPtJs9X/Capture-d-ecran-2025-03-06-221946.png">
+                <img src="https://i.postimg.cc/nVQ10PBq/image.png">
+                <img src="https://i.postimg.cc/mkMNkPT4/image-2.png">
+                <img src="https://i.postimg.cc/d3dm3hJK/image-3.png">
+                <img src="https://i.postimg.cc/6qRLq8BW/image-4.png">
+                <img src="https://i.postimg.cc/j2NQ2DRq/image-5.png">
+                <img src="https://i.postimg.cc/MHRbHnzp/image-6.png">
+                <img src="https://i.postimg.cc/jqJhZFPN/image-7.png">
+                <img src="https://i.postimg.cc/h470p5Td/image-8.png">
+                <img src="https://i.postimg.cc/kMtyfpKS/image-9.png">
+                <img src="https://i.postimg.cc/jqJhZFPh/IMG-0534-PNG.png">
+                <img src="https://i.postimg.cc/05JCcBD0/IMG-1872.jpg">
+            </div>
+        </section>
 
-    <script>
-        let currentRepo = '';
-        let currentFiles = {}; // Stocker tous les fichiers récupérés
-        let currentHtml = '';
-        let currentCss = '';
-        let currentJs = '';
-        
-        // Fonction principale : charger et exécuter le repo
-        async function loadAndRunRepo() {
-            const repoInput = document.getElementById('repoInput').value.trim();
-            if (!repoInput) {
-                showToast('Veuillez entrer un nom de repository');
-                return;
-            }
-            
-            currentRepo = repoInput;
-            
-            showLoading();
-            
-            try {
-                // Récupérer tous les fichiers du repo
-                await fetchAllFiles(repoInput);
-                
-                // Construire la webapp à partir des fichiers
-                buildAndRunWebApp();
-                
-                // Afficher l'arborescence des fichiers
-                displayFileTree();
-                
-                hideLoading();
-                showToast(`✅ ${repoInput} chargé avec succès !`);
-                
-            } catch (error) {
-                hideLoading();
-                showToast(`❌ Erreur: ${error.message}`);
-                console.error(error);
-            }
-        }
-        
-        // Récupérer tous les fichiers du repo (récursif)
-        async function fetchAllFiles(repo, path = '') {
-            const url = `https://api.github.com/repos/${repo}/contents/${path}`;
-            const response = await fetch(url);
-            
-            if (!response.ok) {
-                throw new Error(`Impossible de charger ${repo}`);
-            }
-            
-            const items = await response.json();
-            
-            for (const item of items) {
-                if (item.type === 'file') {
-                    // Récupérer le contenu du fichier
-                    const fileResponse = await fetch(item.download_url);
-                    const content = await fileResponse.text();
-                    currentFiles[item.path] = {
-                        name: item.name,
-                        path: item.path,
-                        content: content,
-                        type: getFileType(item.name)
-                    };
-                } else if (item.type === 'dir') {
-                    // Récursif pour les dossiers
-                    await fetchAllFiles(repo, item.path);
-                }
-            }
-        }
-        
-        // Détecter le type de fichier
-        function getFileType(filename) {
-            const ext = filename.split('.').pop().toLowerCase();
-            if (ext === 'html') return 'html';
-            if (ext === 'css') return 'css';
-            if (ext === 'js') return 'js';
-            return 'other';
-        }
-        
-        // Construire et exécuter la webapp
-        function buildAndRunWebApp() {
-            // Chercher les fichiers principaux
-            let htmlFile = null;
-            let cssContent = '';
-            let jsContent = '';
-            
-            // Parcourir tous les fichiers
-            for (const [path, file] of Object.entries(currentFiles)) {
-                if (file.type === 'html') {
-                    htmlFile = file;
-                } else if (file.type === 'css') {
-                    cssContent += `<style>${file.content}</style>\n`;
-                } else if (file.type === 'js') {
-                    jsContent += file.content + '\n';
-                }
-            }
-            
-            // Si pas de fichier HTML, en créer un par défaut
-            if (!htmlFile) {
-                // Chercher un index.html ou créer un template
-                const indexFile = currentFiles['index.html'] || currentFiles['src/index.html'];
-                if (indexFile && indexFile.type === 'html') {
-                    htmlFile = indexFile;
-                } else {
-                    // Créer un HTML par défaut
-                    htmlFile = {
-                        content: `<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${currentRepo.split('/')[1]}</title>
-    ${cssContent}
-</head>
-<body>
-    <div id="app">
-        <h1>📁 ${currentRepo}</h1>
-        <p>Projet chargé avec succès !</p>
-        <hr>
-        <div class="files-list">
-            <h3>Fichiers trouvés :</h3>
-            <ul>
-                ${Object.keys(currentFiles).map(f => `<li>📄 ${f}</li>`).join('')}
-            </ul>
-        </div>
-    </div>
-    <script>${jsContent}</script>
-</body>
-</html>`
-                    };
-                }
-            }
-            
-            currentHtml = htmlFile.content;
-            
-            // Insérer le CSS et JS dans le HTML si pas déjà inclus
-            let finalHtml = currentHtml;
-            
-            // Insérer le CSS si pas déjà présent
-            if (cssContent && !finalHtml.includes('<style>')) {
-                finalHtml = finalHtml.replace('</head>', `${cssContent}</head>`);
-            }
-            
-            // Insérer le JS si pas déjà présent
-            if (jsContent && !finalHtml.includes('</script>')) {
-                finalHtml = finalHtml.replace('</body>', `<script>${jsContent}</script></body>`);
-            }
-            
-            // Exécuter dans l'iframe
-            runInIframe(finalHtml);
-        }
-        
-        // Exécuter le code dans un iframe
-        function runInIframe(html) {
-            const previewContainer = document.getElementById('previewContainer');
-            
-            // Créer ou récupérer l'iframe
-            let iframe = previewContainer.querySelector('iframe');
-            if (!iframe) {
-                iframe = document.createElement('iframe');
-                previewContainer.innerHTML = '';
-                previewContainer.appendChild(iframe);
-            }
-            
-            // Écrire le contenu dans l'iframe
-            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            iframeDoc.open();
-            iframeDoc.write(html);
-            iframeDoc.close();
-        }
-        
-        // Afficher l'arborescence des fichiers
-        function displayFileTree() {
-            const fileTree = document.getElementById('fileTree');
-            
-            // Organiser les fichiers par dossier
-            const tree = {};
-            for (const [path, file] of Object.entries(currentFiles)) {
-                const parts = path.split('/');
-                let current = tree;
-                for (let i = 0; i < parts.length; i++) {
-                    const part = parts[i];
-                    if (i === parts.length - 1) {
-                        current[part] = file;
-                    } else {
-                        if (!current[part]) current[part] = {};
-                        current = current[part];
-                    }
-                }
-            }
-            
-            // Fonction récursive pour afficher l'arborescence
-            function renderTree(obj, level = 0) {
-                const items = Object.entries(obj).sort((a, b) => {
-                    const aIsFile = !(typeof a[1] === 'object' && !a[1].type);
-                    const bIsFile = !(typeof b[1] === 'object' && !b[1].type);
-                    if (aIsFile === bIsFile) return a[0].localeCompare(b[0]);
-                    return aIsFile ? 1 : -1;
-                });
-                
-                return items.map(([name, value]) => {
-                    const isFile = value.type;
-                    const icon = isFile ? getFileIcon(name) : 'fa-folder';
-                    const color = isFile ? '#88889b' : '#667eea';
-                    
-                    if (isFile) {
-                        return `
-                            <div class="file-tree-item" onclick="openFile('${value.path}')">
-                                <i class="fas ${icon}" style="color: ${color}; width: 18px;"></i>
-                                <span>${name}</span>
-                            </div>
-                        `;
-                    } else {
-                        return `
-                            <div class="file-tree-item folder" onclick="toggleFolder(this)">
-                                <i class="fas ${icon}" style="color: ${color};"></i>
-                                <span>${name}</span>
-                                <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
-                            </div>
-                            <div class="folder-children" style="display: block;">
-                                ${renderTree(value, level + 1)}
-                            </div>
-                        `;
-                    }
-                }).join('');
-            }
-            
-            fileTree.innerHTML = renderTree(tree);
-        }
-        
-        // Ouvrir un fichier dans l'éditeur
-        function openFile(path) {
-            const file = currentFiles[path];
-            if (!file) return;
-            
-            const editor = document.getElementById('codeEditor');
-            const label = document.getElementById('currentFileLabel');
-            
-            editor.value = file.content;
-            label.textContent = path;
-            
-            // Activer l'onglet code
-            switchTab('code');
-            
-            // Mettre en surbrillance le fichier sélectionné
-            document.querySelectorAll('.file-tree-item').forEach(el => {
-                el.classList.remove('active');
-            });
-            event.target.closest('.file-tree-item').classList.add('active');
-        }
-        
-        // Appliquer les modifications du code
-        function applyCodeChanges() {
-            const editor = document.getElementById('codeEditor');
-            const currentFile = document.getElementById('currentFileLabel').textContent;
-            
-            if (currentFile && currentFiles[currentFile]) {
-                // Mettre à jour le contenu du fichier
-                currentFiles[currentFile].content = editor.value;
-                
-                // Reconstruire la webapp
-                buildAndRunWebApp();
-                
-                showToast(`✅ ${currentFile} modifié et exécuté !`);
-            }
-        }
-        
-        // Fonctions UI
-        function switchTab(tab) {
-            const codePanel = document.getElementById('codePanel');
-            const previewContainer = document.getElementById('previewContainer');
-            const tabs = document.querySelectorAll('.tab');
-            
-            tabs.forEach(t => t.classList.remove('active'));
-            
-            if (tab === 'code') {
-                codePanel.style.display = 'flex';
-                previewContainer.style.display = 'none';
-                tabs[1].classList.add('active');
-            } else {
-                codePanel.style.display = 'none';
-                previewContainer.style.display = 'flex';
-                tabs[0].classList.add('active');
-            }
-        }
-        
-        function refreshPreview() {
-            if (currentHtml) {
-                runInIframe(currentHtml);
-                showToast('🔄 Aperçu rafraîchi');
-            }
-        }
-        
-        function toggleFolder(element) {
-            const children = element.nextElementSibling;
-            const icon = element.querySelector('.fa-chevron-down');
-            
-            if (children.style.display === 'none') {
-                children.style.display = 'block';
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                children.style.display = 'none';
-                icon.style.transform = 'rotate(-90deg)';
-            }
-        }
-        
-        function getFileIcon(filename) {
-            const ext = filename.split('.').pop();
-            const icons = {
-                html: 'fa-html5',
-                css: 'fa-css3',
-                js: 'fa-js',
-                json: 'fa-code',
-                md: 'fa-markdown',
-                txt: 'fa-file-alt',
-                png: 'fa-image',
-                jpg: 'fa-image',
-                svg: 'fa-image'
-            };
-            return icons[ext] || 'fa-file';
-        }
-        
-        function showLoading() {
-            const preview = document.getElementById('previewContainer');
-            preview.innerHTML = `
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <span>Chargement de la webapp...</span>
+        <section class="mb-32">
+            <div class="offer-card p-12 rounded-[40px] text-center shadow-[0_0_50px_rgba(59,130,246,0.1)]">
+                <h2 class="text-3xl font-black uppercase italic mb-4">L'OFFRE D'ENTRÉE PERFORM.</h2>
+                <p class="text-gray-400 mb-8 max-w-2xl mx-auto italic">
+                    Pour chaque partenaire rejoignant notre accompagnement, nous brisons les barrières. 
+                    Nous concevons votre site web haute conversion pour seulement <span class="text-blue font-bold">179€</span> au lieu de 2 000€.
+                </p>
+                <div class="flex justify-center items-center gap-4 text-sm font-bold uppercase tracking-widest">
+                    <span class="line-through text-gray-600">2 000 €</span>
+                    <span class="text-blue text-2xl">179 €</span>
                 </div>
-            `;
-        }
-        
-        function hideLoading() {
-            // Rien à faire, le contenu sera affiché par runInIframe
-        }
-        
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMessage').textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-        
-        // Charger le repo par défaut au démarrage
-        document.addEventListener('DOMContentLoaded', () => {
-            loadAndRunRepo();
-        });
-    </script>
+            </div>
+        </section>
+
+        <section class="mb-32">
+            <h2 class="text-3xl font-black uppercase italic mb-10 tracking-tighter text-center italic">Protocole & Transparence<span class="text-blue">.</span></h2>
+            <div class="max-w-3xl mx-auto space-y-4">
+                <details class="glass p-6 rounded-2xl group cursor-pointer border-white/5 hover:border-blue/30 transition">
+                    <summary class="flex justify-between items-center font-bold uppercase tracking-widest text-sm">
+                        Concrètement, comment travaillez-vous sur mon compte ?
+                        <span class="text-blue group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="mt-4 text-gray-400 text-sm font-light leading-relaxed">Nous auditons vos data, réécrivons vos scripts selon nos patterns de rétention, et gérons l'intégralité du montage et de la publication. Vous validez, nous exécutons. C'est un système "Done-for-you" conçu pour le ROI.</p>
+                </details>
+                <details class="glass p-6 rounded-2xl group cursor-pointer border-white/5 hover:border-blue/30 transition">
+                    <summary class="flex justify-between items-center font-bold uppercase tracking-widest text-sm">
+                        Quelles garanties de résultats offrez-vous ?
+                        <span class="text-blue group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <p class="mt-4 text-gray-400 text-sm font-light leading-relaxed">L'organique n'est pas une science exacte, mais nos protocoles ont un taux de réussite de 100% sur le long terme. Si votre contenu respecte nos structures, l'algorithme n'a d'autre choix que de vous pousser.</p>
+                </details>
+            </div>
+        </section>
+
+        <section class="mb-32 glass p-12 rounded-[40px] border border-blue/20 text-center">
+            <h2 class="text-3xl md:text-5xl font-black uppercase italic mb-8 tracking-tighter">SÉLECTION DRASTIQUE.</h2>
+            <div class="grid md:grid-cols-2 gap-10 text-left">
+                <p class="text-gray-400 leading-relaxed text-lg font-light">
+                    Perform limite volontairement son nombre de partenaires actifs pour maintenir une exécution chirurgicale. 
+                </p>
+                <p class="text-gray-400 leading-relaxed text-lg font-light">
+                    Nous ne cherchons pas de clients, mais des actifs à haut potentiel. Si nous validons votre dossier, préparez-vous à une accélération sans précédent.
+                </p>
+            </div>
+        </section>
+
+        <section class="text-center py-20">
+            <h2 class="text-4xl font-black mb-10 tracking-tighter uppercase italic text-blue italic">VÉRIFIER VOTRE ÉLIGIBILITÉ.</h2>
+            <a href="https://instagram.com/blox.vlr" target="_blank" class="inline-block bg-blue text-white px-16 py-6 rounded-full font-black uppercase tracking-tighter text-xl hover:scale-105 transition-all shadow-[0_0_60px_rgba(59,130,246,0.4)]">
+                POSTULER VIA @BLOX.VLR
+            </a>
+            <p class="mt-8 text-[10px] text-gray-700 uppercase tracking-[0.5em]">Offre Site Web 179€ incluse dans l'accompagnement.</p>
+        </section>
+    </main>
+
+    <footer class="py-12 border-t border-white/5 text-center text-gray-800 text-[9px] uppercase tracking-[0.4em]">
+        Perform © 2026 — L'Antidote à la stagnation organique.
+    </footer>
+
 </body>
 </html>
